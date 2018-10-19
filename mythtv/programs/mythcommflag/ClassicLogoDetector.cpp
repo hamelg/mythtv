@@ -242,8 +242,8 @@ bool ClassicLogoDetector::searchForLogo(MythPlayer* player)
         cerr << "Hit ENTER to continue" << endl;
         getchar();
 #endif
-        if (((m_logoMaxX - m_logoMinX) < (m_width / 4)) &&
-            ((m_logoMaxY - m_logoMinY) < (m_height / 4)) &&
+        if (((m_logoMaxX - m_logoMinX) < (m_width / commDetectLogoWidthRatio)) &&
+            ((m_logoMaxY - m_logoMinY) < (m_height / commDetectLogoHeightRatio)) &&
             (pixelsInMask > minPixelsInMask))
         {
             m_logoInfoAvailable = true;
@@ -270,13 +270,8 @@ bool ClassicLogoDetector::searchForLogo(MythPlayer* player)
 
     delete [] edgeCounts;
 
-<<<<<<< variant A
     if (!m_logoInfoAvailable)
         LOG(VB_COMMFLAG, LOG_NOTICE, "No suitable logo area found.");
->>>>>>> variant B
-    if (!logoInfoAvailable)
-        LOG(VB_GENERAL, LOG_NOTICE, "No suitable logo area found.");
-======= end
 
     player->DiscardVideoFrame(player->GetRawVideoFrame(0));
     return m_logoInfoAvailable;
@@ -460,14 +455,22 @@ void ClassicLogoDetector::DetectEdges(VideoFrame *frame, EdgeMaskEntry *edges,
 
     for (uint y = m_commDetectBorder + r; y < (m_height - m_commDetectBorder - r); y++)
     {
-        if ((y > (m_height/4)) && (y < (m_height * 3 / 4)))
+        if (
+            (commDetectLogoLocation.contains("N") && (y > (m_height/4))) ||
+            (commDetectLogoLocation.contains("S") && (y < (m_height * 3 / 4))) ||
+            ((y > (m_height/4)) && (y < (m_height * 3 / 4)))
+            )
             continue;
 
         for (uint x = m_commDetectBorder + r; x < (m_width - m_commDetectBorder - r); x++)
         {
             int edgeCount = 0;
 
-            if ((x > (m_width/4)) && (x < (m_width * 3 / 4)))
+            if (
+                (commDetectLogoLocation.contains("W") && (x > (m_width/4))) ||
+                (commDetectLogoLocation.contains("E") && (x < (m_width * 3 / 4))) ||
+                ((x > (m_width/4)) && (x < (m_width * 3 / 4)))
+                )
                 continue;
 
             uint pos = y * m_width + x;
