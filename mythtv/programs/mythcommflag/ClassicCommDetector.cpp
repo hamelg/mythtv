@@ -26,6 +26,7 @@ using namespace std;
 #include "ClassicCommDetector.h"
 #include "ClassicLogoDetector.h"
 #include "ClassicSceneChangeDetector.h"
+#include "commercial_debug.h"
 
 enum frameAspects {
     COMM_ASPECT_NORMAL = 0,
@@ -1018,7 +1019,7 @@ void ClassicCommDetector::ProcessFrame(VideoFrame *frame,
                 frameInfo[curFrameNumber].flagMask ));
 
 #ifdef SHOW_DEBUG_WIN
-    comm_debug_show(frame->buf);
+    comm_debug_show(frame);
     getchar();
 #endif
 
