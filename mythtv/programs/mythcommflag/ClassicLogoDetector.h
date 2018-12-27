@@ -35,8 +35,12 @@ class ClassicLogoDetector : public LogoDetectorBase
     unsigned int xspacing, yspacing;
     unsigned int commDetectBorder;
 
+    QString commDetectLogoLocation;
     int commDetectLogoSamplesNeeded;
     int commDetectLogoSampleSpacing;
+    int commDetectLogoWidthRatio;
+    int commDetectLogoHeightRatio;
+    int commDetectLogoMinPixels;
     int commDetectLogoSecondsNeeded;
     double commDetectLogoGoodEdgeThreshold;
     double commDetectLogoBadEdgeThreshold;
