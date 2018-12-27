@@ -36,6 +36,10 @@ class ClassicLogoDetector : public LogoDetectorBase
     int                  m_commDetectLogoSecondsNeeded     {624};
     double               m_commDetectLogoGoodEdgeThreshold {0.75};
     double               m_commDetectLogoBadEdgeThreshold  {0.85};
+    int commDetectLogoWidthRatio;
+    int commDetectLogoHeightRatio;
+    int commDetectLogoMinPixels;
+    QString commDetectLogoLocation;
 
     EdgeMaskEntry       *m_edgeMask                        {nullptr};
 
