@@ -106,7 +106,7 @@ class ClassicCommDetector : public CommDetectorBase
         bool FrameIsInBreakMap(uint64_t f, const frm_dir_map_t &breakMap) const;
         void DumpMap(frm_dir_map_t &map);
         static void CondenseMarkMap(show_map_t &map, int spacing, int length);
-        static void ConvertShowMapToCommMap(
+        void ConvertShowMapToCommMap(
             frm_dir_map_t &out, const show_map_t &in);
         void CleanupFrameInfo(void);
         void GetLogoCommBreakMap(show_map_t &map);

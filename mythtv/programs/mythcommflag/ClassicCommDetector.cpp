@@ -2379,12 +2379,35 @@ void ClassicCommDetector::ConvertShowMapToCommMap(
         return;
 
     show_map_t::const_iterator sit;
+    uint64_t comm_start = 0;
+    uint64_t comm_end = 0;
+
     for (sit = in.begin(); sit != in.end(); ++sit)
     {
         if (*sit == MARK_START)
+        {
             out[sit.key()] = MARK_COMM_END;
+            comm_end = sit.key();
+        }
         else
+        {
             out[sit.key()] = MARK_COMM_START;
+            comm_start = sit.key();
+        }
+
+        // Remove COMM break if duration is less than CommDetectMinCommBreakLength
+        if (comm_start && comm_end)
+        {
+            if (comm_start > comm_end)
+                continue;
+
+            if ((comm_end - comm_start) < (m_commDetectMinCommBreakLength * m_fps) )
+            {
+                out.remove(comm_start);
+                out.remove(comm_end);
+            }
+            comm_start = comm_end = 0;
+        }
     }
 
     frm_dir_map_t::iterator it = out.begin();
